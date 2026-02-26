@@ -140,6 +140,7 @@ fun AutomationInnerPage(
     val appListLoading = rememberSaveable { mutableStateOf(SharedState.defaultLoadingValue) }
 
     val progressNotify = rememberSaveable { mutableStateOf(settingsState.value.automation.showNotifyWhenProgress) }
+    val progressNotifyAutoDismiss = rememberSaveable { mutableStateOf(settingsState.value.automation.progressNotifyAutoDismiss) }
 //    val errNotify = rememberSaveable { mutableStateOf(settingsState.value.automation.showNotifyWhenErr) }
 //    val successNotify = rememberSaveable { mutableStateOf(settingsState.value.automation.showNotifyWhenSuccess) }
 
@@ -637,6 +638,29 @@ fun AutomationInnerPage(
                 )
 
 
+            }
+
+            item {
+                SettingsContentSwitcher(
+                    left = {
+                        Text(stringResource(R.string.progress_notification_auto_dismiss), fontSize = itemFontSize)
+                    },
+                    right = {
+                        Switch(
+                            checked = progressNotifyAutoDismiss.value,
+                            onCheckedChange = null
+                        )
+                    },
+                    onClick = {
+                        val newValue = !progressNotifyAutoDismiss.value
+
+                        //save
+                        progressNotifyAutoDismiss.value = newValue
+                        SettingsUtil.update {
+                            it.automation.progressNotifyAutoDismiss = newValue
+                        }
+                    }
+                )
             }
 
             // pull interval
