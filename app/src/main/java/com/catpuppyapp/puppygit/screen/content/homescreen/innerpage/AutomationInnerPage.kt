@@ -644,6 +644,7 @@ fun AutomationInnerPage(
                 SettingsContentSwitcher(
                     left = {
                         Text(stringResource(R.string.progress_notification_auto_dismiss), fontSize = itemFontSize)
+                        Text(stringResource(R.string.progress_notification_auto_dismiss_desc), fontSize = itemDescFontSize, fontWeight = FontWeight.Light)
                     },
                     right = {
                         Switch(
