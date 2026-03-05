@@ -56,8 +56,12 @@ class AutomationService: BaseAccessibilityService() {
         )
 
 
-        private fun createNotify(notifyId:Int):ServiceNotify {
-            return ServiceNotify(AutomationNotify.create(notifyId))
+        private fun createNotify(notifyId:Int, settings: AppSettings):ServiceNotify {
+            val notify = AutomationNotify.create(notifyId)
+            if (settings.automation.progressNotifyAutoDismiss) {
+                notify.timeoutAfterMs = 5000
+            }
+            return ServiceNotify(notify)
         }
 
 
@@ -91,7 +95,7 @@ class AutomationService: BaseAccessibilityService() {
 
             repoList.forEachBetter {
                 //notify
-                val serviceNotify = createNotify(NotifyUtil.genId())
+                val serviceNotify = createNotify(NotifyUtil.genId(), settings)
                 NotifySenderMap.set(
                     NotifySenderMap.genKey(it.id, sessionId),
                     NotificationSender(
@@ -125,7 +129,7 @@ class AutomationService: BaseAccessibilityService() {
 
             repoList.forEachBetter {
                 //notify
-                val serviceNotify = createNotify(NotifyUtil.genId())
+                val serviceNotify = createNotify(NotifyUtil.genId(), settings)
                 NotifySenderMap.set(
                     NotifySenderMap.genKey(it.id, sessionId),
                     NotificationSender(
